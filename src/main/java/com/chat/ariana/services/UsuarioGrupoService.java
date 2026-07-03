@@ -1,6 +1,4 @@
 package com.chat.ariana.services;
-
-import com.chat.ariana.Model.Usuario;
 import com.chat.ariana.Model.UsuarioGrupo;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;

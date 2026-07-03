@@ -1,6 +1,8 @@
 package com.chat.ariana.services;
 
+import com.chat.ariana.Model.Grupo;
 import com.chat.ariana.Model.Mensaje;
+import com.chat.ariana.Model.Usuario;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -9,24 +11,32 @@ import java.time.LocalDateTime;
 public class ChatService {
 
     private final UsuarioService usuarioService;
+    private final MensajesService mensajesService;
+    private final GrupoService grupoService;
 
-    public ChatService(UsuarioService usuarioService){
+    public ChatService(UsuarioService usuarioService,
+                       MensajesService mensajesService,
+                       GrupoService grupoService){
         this.usuarioService = usuarioService;
+        this.mensajesService = mensajesService;
+        this.grupoService = grupoService;
     }
     public Mensaje procesarMensaje(Mensaje mensaje){
+
+
         mensaje.setFecha(LocalDateTime.now());
 
-        boolean existe = usuarioService
-                        .obtenerUsuarios()
-                        .stream()
-                        .anyMatch(usuario -> usuario.getId_usuario().equals(mensaje.getId_usuario()));
-
-        if(!existe){
-            throw new RuntimeException("El usuario no existe");
+        try {
+            Grupo grupo = grupoService.obtenerGrupoPorId(mensaje.getId_grupo());
+            Usuario usuario = usuarioService.obtenerUsuarioPorId(mensaje.getId_usuario());
+        } catch (Exception e) {
+            throw new RuntimeException("Usuario no existe");
         }
 
 
+
+
         // guardar mediante api php
-        return mensaje;
+        return mensajesService.agregarMensaje(mensaje);
     }
 }

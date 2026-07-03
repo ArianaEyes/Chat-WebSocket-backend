@@ -1,7 +1,6 @@
 package com.chat.ariana.services;
 
 import com.chat.ariana.Model.Grupo;
-import com.chat.ariana.Model.Usuario;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
@@ -22,5 +21,13 @@ public class GrupoService {
                 .uri("https://arianini.alwaysdata.net/grupo_chat.php")
                 .retrieve()
                 .body(new ParameterizedTypeReference<List<Grupo>>() {});
+    }
+
+    public Grupo obtenerGrupoPorId(Integer id_grupo){
+        return restClient
+                .get()
+                .uri("https://arianini.alwaysdata.net/usuarios_grupo.php?id_grupo="+id_grupo)
+                .retrieve()
+                .body(Grupo.class);
     }
 }

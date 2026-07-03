@@ -21,6 +21,14 @@ public class UsuarioService {
                     .retrieve()
                     .body(new ParameterizedTypeReference<List<Usuario>>() {});
         }
+        public Usuario obtenerUsuarioPorId(Integer id_usuario){
+            return restClient
+                    .get()
+                    .uri("https://arianini.alwaysdata.net/usuarios_chat.php?id_usuario="+id_usuario)
+                    .retrieve()
+                    .body(Usuario.class);
+
+        }
 
 
 }

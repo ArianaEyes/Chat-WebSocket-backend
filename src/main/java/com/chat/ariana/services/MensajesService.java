@@ -1,7 +1,6 @@
 package com.chat.ariana.services;
 
 import com.chat.ariana.Model.Mensaje;
-import com.chat.ariana.Model.Usuario;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
@@ -23,4 +22,22 @@ public class MensajesService {
                 .retrieve()
                 .body(new ParameterizedTypeReference<List<Mensaje>>() {});
     }
+    public Mensaje obtenerMensajePorId(Integer id_mensaje){
+        return restClient
+                .get()
+                .uri("https://arianini.alwaysdata.net/mensajes.php?id_mensaje="+id_mensaje)
+                .retrieve()
+                .body(Mensaje.class);
+    }
+
+    public Mensaje agregarMensaje(Mensaje mensaje){
+        return restClient
+                .post()
+                .uri("https://arianini.alwaysdata.net/mensajes.php")
+                .body(mensaje)
+                .retrieve()
+                .body(Mensaje.class);
+    }
+
+
 }
